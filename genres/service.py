@@ -11,6 +11,6 @@ class GenreService:
 
     def create_genre(self, name):
         genre = dict(
-            name=name,
+            nome=name,
         )
         return self.genre_repository.create_genre(genre)
