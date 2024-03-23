@@ -10,7 +10,7 @@ def show_actors():
     actors = actor_service.get_actors()
 
     if actors:
-        st.title('Lista de atores/atrizes')
+        st.subheader('Lista de atores/atrizes')
         actors_df = pd.json_normalize(actors)
 
         AgGrid(

@@ -9,7 +9,7 @@ def show_genres():
     genres = genre_service.get_genres()
 
     if genres:
-        st.write('Lista Gêneros')
+        st.subheader('Lista Gêneros')
         genres_df = pd.json_normalize(genres)
 
         # Importa para dataframe personalizado do streamlit-aggrid
@@ -26,7 +26,7 @@ def show_genres():
     else:
         st.warning('Nenhum Gênero foi encontrado')
 
-    st.title('Cadastrar novo Gênero')
+    st.subheader('Cadastrar novo Gênero')
     name = st.text_input('Nome do Gênero')
 
     if st.button('Cadastrar'):
