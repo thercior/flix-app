@@ -1,35 +1,61 @@
 import pandas as pd
 import streamlit as st
-from st_aggrid import AgGrid
-
-
-actors = [
-    {
-        'id': 1,
-        'nome': 'Will Smith'
-    },
-    {
-        'id': 2,
-        'nome': 'Angelina Jolie'
-    },
-    {
-        'id': 3,
-        'nome': 'Wagner Moura'
-    },
-]
+from datetime import datetime
+from st_aggrid import AgGrid, ExcelExportMode
+from actors.service import ActorService
 
 
 def show_actors():
-    st.title('Lista de atores/atrizes')
+    actor_service = ActorService()
+    actors = actor_service.get_actors()
 
-    AgGrid(
-        data=pd.DataFrame(actors),
-        reload_data=True,
-        key='atores_grid'
-    )
+    if actors:
+        st.title('Lista de atores/atrizes')
+        actors_df = pd.json_normalize(actors)
+
+        AgGrid(
+            data=actors_df,
+            reload_data=True,
+            columns_auto_size_mode=True,
+            enableSorting=True,
+            enableFiltering=True,
+            enableColResize=True,
+            excel_export_mode=ExcelExportMode.MANUAL,
+            key='atores_grid'
+        )
+    else:
+        st.warning('Nenhum Ator/Atriz foi encontrado')
 
     st.subheader('Cadastrar novo(a) Ator/Atriz')
-    nome = st.text_input('Nome(a) do Ator/Atriz')
+    name = st.text_input('Nome(a) do Ator/Atriz')
+    birthday = st.date_input(
+        label='Data de nascimento',
+        value=datetime.today(),
+        min_value=datetime(1800, 1, 1).date(),
+        max_value=datetime.today(),
+        format='DD/MM/YYYY',
+    )
+    nationality_dropdown = [
+        'BRA',
+        'Estados Unidos',
+        'EUA',
+        'Brasil',
+        'Inglaterra',
+        'Argentina',
+        'Alemanha',
+        'Austrália',
+        'Holanda',
+    ]
+    nationality = st.selectbox(label='Nacionalidade', options=nationality_dropdown)
 
     if st.button('Cadastrar'):
-        st.success(f'Ator/Atriz "{nome}" cadastrado(a) com sucesso!')
+        new_actor = actor_service.create_actor(
+            name=name,
+            birthday=birthday,
+            nationality=nationality,
+        )
+        if new_actor:
+            st.success(f'Ator/Atriz "{name}" cadastrado(a) com sucesso!')
+            st.rerun()
+        else:
+            st.error('Erro ao acdastrar o Ator/Atriz. verifique os campos novamente')
