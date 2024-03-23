@@ -7,7 +7,7 @@ def show_home():
     movie_service = MovieService()
     movie_stats = movie_service.get_movie_stats()
 
-    st.title('Estatíticas de Filmes')
+    st.title('Estatísticas de Filmes')
 
     if len(movie_stats['filmes_por_genero']) > 0:
         st.subheader('Filmes por gênero')
