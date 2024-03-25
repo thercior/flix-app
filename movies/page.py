@@ -12,7 +12,7 @@ def show_movies():
         st.subheader('Lista de filmes')
         # Transformando em um dataframe
         movies_df = pd.json_normalize(movies)
-        # movies_df = movies_df.drop(columns=['atores', 'genero.id'])  # corrigir isso depois com a aula
+        movies_df = movies_df.drop(columns=['atores', 'genero.id'])  # corrigir isso depois com a aula
 
         AgGrid(
             data=movies_df,
