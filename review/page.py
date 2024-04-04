@@ -37,7 +37,6 @@ def show_reviews():
     comment = st.text_area(label='Comentário')
 
     if st.button('Cadastrar'):
-        # Verificar aqui o erro que faz com que o retorno da api seja 200 e não 201 que é o certo.
         new_review = review_service.create_review(
             movie=movie_titles[selected_movie_title],
             stars=stars,

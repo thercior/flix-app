@@ -20,6 +20,6 @@ class ReviewService:
             stars=stars,
             comentario=comment
         )
-        new_review = self.review_repository.create_review(review)  # Retorno da api tá sendo status_code == 200. O certo é 201.
+        new_review = self.review_repository.create_review(review)
         st.session_state.reviews.append(new_review)
         return new_review
