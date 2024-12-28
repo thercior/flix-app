@@ -4,16 +4,19 @@ from actors.page import show_actors
 from genres.page import show_genres
 from home.page import show_home
 from login.page import show_login
-from movies.page import show_movies
+from movies.page import show_movies, show_movie_details
 from review.page import show_reviews
 
 
 def main():
+    query_params = st.query_params
 
     if 'token' not in st.session_state:
         # Initialize a token for the session
         show_login()
     else:
+        page = query_params.get('page')
+
         st.title('Flix App')
 
         with st.sidebar:
@@ -46,6 +49,9 @@ def main():
 
             case 'Avaliações':
                 show_reviews()
+
+        if page == 'movie)details' and 'movie_id' in query_params:
+            show_movie_details(query_params.get('movie_id'))
 
 
 if __name__ == '__main__':
