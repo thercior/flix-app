@@ -14,6 +14,9 @@ class MovieService:
         st.session_state.movies = movies
         return movies
 
+    def get_movie_by_id(self, movie_id):
+        return self.movie_repository.get_movie_by_id(movie_id)
+
     def create_movie(self, title, release_date, genre, actors, resume):
         movie = dict(
             titulo=title,
