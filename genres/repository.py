@@ -1,12 +1,13 @@
 import requests
 import streamlit as st
 from login.service import logout
+from api.service import ApiBase
 
 
 class GenreRepository:
 
     def __init__(self):
-        self.__base_url = 'http://3.90.0.66/api/v1/'
+        self.__base_url = ApiBase.get_base_url()
         self.__genres_url = f'{self.__base_url}generos/'
         self.__headers = {
             'Authorization': f'Bearer {st.session_state.token}'
